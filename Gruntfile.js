@@ -10,11 +10,23 @@ module.exports = function(grunt) {
         jshintrc: "./.jshintrc"
       },
       all: ["Gruntfile.js", "src/**/*.js", "test/**/*.js"]
+    },
+
+    plato: {
+      src: {
+        options: {
+          jshint: grunt.file.readJSON("./.jshintrc")
+        },
+        files: {
+          "reports/plato": ["src/**/*.js"]
+        }
+      }
     }
   });
 
   grunt.loadNpmTasks("grunt-contrib-jshint");
+  grunt.loadNpmTasks("grunt-plato");
 
-  grunt.registerTask("default", ["jshint"]);
+  grunt.registerTask("default", ["jshint", "plato"]);
   grunt.registerTask("test", ["jshint"]);
 };
