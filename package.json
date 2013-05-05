@@ -14,7 +14,7 @@
   "bugs": "https://github.com/dertseha/node-webapp-template/issues",
   "dependencies": {
     "nconf": "0.6.x",
-    "winston": "0.6.x"
+    "winston": "0.7.x"
   },
   "devDependencies": {
     "grunt": "~0.4.1",
