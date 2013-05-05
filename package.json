@@ -24,6 +24,7 @@
     "node": ">=0.8.x"
   },
   "scripts": {
-    "start": "node src/server/server.js"
+    "start": "node src/server/server.js",
+    "test": "grunt test"
   }
 }
