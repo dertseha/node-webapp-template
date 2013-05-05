@@ -1,0 +1,29 @@
+{
+  "name": "node-webapp-template",
+  "version": "0.0.1",
+  "description": "A template for node/web applications.",
+  "private": true,
+  "author": {
+    "name": "Christian Haas",
+    "email": "christian.haas@sevensuns.at"
+  },
+  "licenses": [{
+    "type": "BSD-3-Clause",
+    "url": "https://github.com/dertseha/node-webapp-template/blob/master/LICENSE"
+  }],
+  "bugs": "https://github.com/dertseha/node-webapp-template/issues",
+  "dependencies": {
+    "nconf": "0.6.x",
+    "winston": "0.6.x"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-contrib-jshint": "~0.4.3"
+  },
+  "engines": {
+    "node": ">=0.8.x"
+  },
+  "scripts": {
+    "start": "node src/server/server.js"
+  }
+}
