@@ -4,4 +4,4 @@ It contains the basic setup for a build chain using grunt.
 
 ## License
 
-Intern is available under the terms of the [New BSD License](LICENSE).
+The project is available under the terms of the [New BSD License](LICENSE).
