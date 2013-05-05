@@ -14,3 +14,7 @@ logger.add(winston.transports.Console, {
 });
 
 logger.info("Starting application...");
+
+var WebServer = require("./WebServer/WebServer.js");
+
+var server = new WebServer(config);
