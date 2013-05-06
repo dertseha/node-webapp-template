@@ -44,7 +44,13 @@ var WebServer = function(configuration) {
   // });
 
   webServer.get("/", function(req, res) {
-    var pageOptions = {};
+    var clientConfig = {
+      test: "World"
+    };
+    var pageOptions = {
+      clientConfig: JSON.stringify(clientConfig),
+      build: req.query.build || "full"
+    };
 
     res.render("root", pageOptions);
   });

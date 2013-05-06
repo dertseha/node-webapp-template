@@ -12,6 +12,7 @@
   "maxcomplexity": 15,
 
   "globals": {
+    "define": false,
     "require": false,
     "module": false
   }
