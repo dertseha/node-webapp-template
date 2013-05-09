@@ -1,6 +1,13 @@
 /* global process */
 "use strict";
 
+/**
+This module handles the configuration
+
+@module Server
+@class Configuration
+**/
+
 var path = require("path");
 
 var nconf = require("nconf");

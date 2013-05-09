@@ -94,6 +94,29 @@ module.exports = function(grunt) {
           port: 9052
         }
       }
+    },
+
+    yuidoc: {
+      client: {
+        name: "<%= pkg.name %> - Client",
+        description: "<%= pkg.description %>",
+        version: "<%= pkg.version %>",
+        url: "da homepage <%= pkg.homepage %>",
+        options: {
+          paths: ["src/client/"],
+          outdir: "build/doc/client/"
+        }
+      },
+      server: {
+        name: "<%= pkg.name %> - Server",
+        description: "<%= pkg.description %>",
+        version: "<%= pkg.version %>",
+        url: "da homepage <%= pkg.homepage %>",
+        options: {
+          paths: ["src/server/"],
+          outdir: "build/doc/server/"
+        }
+      }
     }
   });
 
@@ -101,8 +124,9 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks("grunt-contrib-copy");
   grunt.loadNpmTasks("grunt-contrib-jshint");
   grunt.loadNpmTasks("grunt-contrib-requirejs");
+  grunt.loadNpmTasks("grunt-contrib-yuidoc");
   grunt.loadNpmTasks("grunt-plato");
 
-  grunt.registerTask("default", ["jshint", "plato", "requirejs:compile", "requirejs:minify", "copy", "test"]);
+  grunt.registerTask("default", ["jshint", "plato", "requirejs:compile", "requirejs:minify", "copy", "test", "yuidoc"]);
   grunt.registerTask("test", ["jshint", "buster"]);
 };

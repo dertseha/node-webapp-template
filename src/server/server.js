@@ -1,5 +1,11 @@
 "use strict";
 
+/**
+The server runs the whole show
+
+@module Server
+*/
+
 var winston = require("winston");
 var logger = winston.loggers.add("root", {});
 
