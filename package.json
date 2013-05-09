@@ -19,11 +19,16 @@
     "winston": "0.7.x"
   },
   "devDependencies": {
+    "buster": "~0.6.12",
+    "buster-amd": "~0.3.0",
+    "buster-istanbul": "~0.1.7",
     "grunt": "~0.4.1",
+    "grunt-buster": "git://github.com/busterjs/grunt-buster.git",
+    "grunt-contrib-copy": "~0.4.1",
     "grunt-contrib-jshint": "~0.4.3",
     "grunt-contrib-requirejs": "~0.4.0",
     "grunt-plato": "~0.2.0",
-    "grunt-contrib-copy": "~0.4.1"
+    "phantomjs": "~1.9.0-3"
   },
   "engines": {
     "node": ">=0.8.x"

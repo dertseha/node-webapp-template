@@ -36,7 +36,7 @@ var WebServer = function(configuration) {
       secret: sessionSecret
     }));
     webServer.use(webServer.router);
-    webServer.use(express["static"](path.join(__dirname, "./public")));
+    webServer.use(express["static"](path.join(__dirname, "../../wwwroot")));
   });
 
   // webServer.configure("development", function() {
