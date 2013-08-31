@@ -1,21 +1,16 @@
+/* global describe, it, global */
 "use strict";
+var expect = require("expect.js");
 
-var buster = require("buster");
-var assert = buster.assert;
+var config = require(global.resolveSource("server/Configuration.js"));
 
-buster.testCase("Configuration", {
+describe("Configuration", function() {
 
-  setUp: function() {
-    this.config = require("../../src/server/Configuration.js");
-  },
+  describe("http", function() {
+    it("should have default port 3000", function() {
+      var http = config.get("http");
 
-  "http": {
-    setUp: function() {
-      this.http = this.config.get("http");
-    },
-
-    "should have default port 3000": function() {
-      assert.equals(this.http.port, 3000);
-    }
-  }
+      expect(http.port).to.be.equal(3000);
+    });
+  });
 });

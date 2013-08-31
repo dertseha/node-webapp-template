@@ -3,29 +3,17 @@ extends layout
 block content
   h1 node-webapp-template
 
-  div(data-ng-controller="TestController")
+  div(data-ng-controller="MainController")
     label Name:
     input(type="text", ng-model="testName", placeholder="Enter a name here")
     span Hello {{testName}}!
 
-  script(type="text/javascript", charset="utf-8", src="/javascripts/" + build + "/lib/require.js")
-  script
-    require.config({
-      baseUrl: "/javascripts/!{build}",
-      paths: {
-        "angular": "lib/angular",
-        "ClientApp": "client/ClientApp"
-      },
-      shim: {
-        "angular": {
-          exports: "angular"
-        }
-      },
-      config: {
-        "ClientApp": !{clientConfig}
-      }
-    });
-    require(['angular', 'ClientApp'], function(angular, app) {
-      var appModuleNames = app;
-      angular.bootstrap(document, appModuleNames);
-    });
+  script(type="text/javascript", charset="utf-8", src="/javascripts/" + build + "/lib/angular.js")
+  script(type="text/javascript", charset="utf-8", src="/javascripts/" + build + "/client/client.js")
+  script.
+    (function main() {
+      var config = !{clientConfig};
+      var appNames = app.setup(angular, config);
+
+      angular.bootstrap(document, appNames);
+    })();

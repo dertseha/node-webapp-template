@@ -1,101 +1,82 @@
+/* global __dirname */
 "use strict";
+var path = require("path");
 
 module.exports = function(grunt) {
+  var jsFiles = ["Gruntfile.js", "src/client/**/*.js", "src/server/**/*.js", "test/**/*.js"];
 
   grunt.initConfig({
     pkg: grunt.file.readJSON("package.json"),
 
-    // Run JSHint on all sources, excluding the generated or imported client scripts
+    // Run JSHint on all sources
     jshint: {
       options: {
         jshintrc: "./.jshintrc"
       },
-      all: ["Gruntfile.js", "src/client/**/*.js", "src/server/**/*.js", "test/**/*.js"]
+      all: jsFiles
     },
 
-    // Run Plato (static analysis) on server and client sources
-    plato: {
-      src: {
+    // JSBeautifier on all sources
+    jsbeautifier: {
+      standard: {
+        src: jsFiles,
         options: {
-          jshint: grunt.file.readJSON("./.jshintrc")
-        },
-        files: {
-          "build/reports/plato": ["src/client/**/*.js", "src/server/**/*.js"]
+          js: grunt.file.readJSON(".jsbeautifyrc")
         }
       }
     },
 
-    // Combine the client sources into one file, minify as second task
-    requirejs: {
-      compile: {
-        options: {
-          baseUrl: "src/client",
-
-          modules: [{
-            name: "ClientApp",
-            exclude: ["angular"]
-          }],
-          dir: "build/client/full",
-
-          optimize: "none"
-        }
-      },
-      minify: {
-        options: {
-          baseUrl: "src/client",
-
-          modules: [{
-            name: "ClientApp",
-            exclude: ["angular"]
-          }],
-          dir: "build/client/min",
-
-          optimize: "uglify2"
-        }
-      }
-    },
-
-    // Copy the combined client sources to public server directories
-    copy: {
+    // browserify for packing all commonjs files
+    browserify: {
       client: {
-        files: [{
-          src: "build/client/full/ClientApp.js",
-          dest: "src/wwwroot/javascripts/full/client/ClientApp.js"
-        }, {
-          src: "build/client/min/ClientApp.js",
-          dest: "src/wwwroot/javascripts/min/client/ClientApp.js"
-        }]
+        src: ["src/client/index.js"],
+        dest: "src/wwwroot/javascripts/full/client/client.js",
+        options: {
+          standalone: "app"
+        }
       }
     },
 
-    // Run tests using buster
-    buster: {
-      server: {
-        test: {
-          reporter: "specification",
-          "config-group": "Server tests"
+    // uglify for compression
+    uglify: {
+      lib: {
+        files: {
+          "src/wwwroot/javascripts/min/client/client.js": ["src/wwwroot/javascripts/full/client/client.js"]
+        },
+        options: {
+          mangle: {
+            except: ["$scope"]
+          }
         }
-      },
+      }
+    },
+
+    // Run tests using mocha
+    mochaTest: {
       clientRaw: {
-        test: {
-          reporter: "specification",
-          "config-group": "Client tests raw"
+        options: {
+          require: ["./test/testStandard.js"],
+          reporter: "spec"
         },
-        server: {
-          port: 9050
-        }
+        src: ["test/client/**/*Test.js"]
       },
-      clientMin: {
-        test: {
-          reporter: "specification",
-          "config-group": "Client tests minified"
+      server: {
+        options: {
+          require: ["./test/testStandard.js"],
+          reporter: "spec"
         },
-        server: {
-          port: 9052
-        }
+        src: ["test/server/**/*Test.js"]
+      },
+      coverage: {
+        options: {
+          require: ["./test/testCoverage.js"],
+          reporter: "min"
+        },
+        src: ["test/**/*Test.js"]
       }
     },
 
+    // documentation
     yuidoc: {
       client: {
         name: "<%= pkg.name %> - Client",
@@ -117,16 +98,44 @@ module.exports = function(grunt) {
           outdir: "build/doc/server/"
         }
       }
+    },
+
+    // tasks for coverage analysis (istanbul)
+    instrument: {
+      files: ["src/client/**/*.js", "src/server/**/*.js"],
+      options: {
+        basePath: "build/instrumented/"
+      }
+    },
+    storeCoverage: {
+      options: {
+        dir: "build/reports/coverage/"
+      }
+    },
+    makeReport: {
+      src: "build/reports/coverage/**/*.json",
+      options: {
+        type: "lcov",
+        dir: "build/reports/coverage/",
+        print: "text-summary" // detail, none
+      }
     }
   });
 
-  grunt.loadNpmTasks("grunt-buster");
-  grunt.loadNpmTasks("grunt-contrib-copy");
+  grunt.loadNpmTasks("grunt-jsbeautifier");
+  grunt.loadNpmTasks("grunt-browserify");
   grunt.loadNpmTasks("grunt-contrib-jshint");
-  grunt.loadNpmTasks("grunt-contrib-requirejs");
+  grunt.loadNpmTasks("grunt-contrib-uglify");
   grunt.loadNpmTasks("grunt-contrib-yuidoc");
-  grunt.loadNpmTasks("grunt-plato");
+  grunt.loadNpmTasks("grunt-istanbul");
+  grunt.loadNpmTasks("grunt-mocha-test");
 
-  grunt.registerTask("default", ["jshint", "plato", "requirejs:compile", "requirejs:minify", "copy", "test", "yuidoc"]);
-  grunt.registerTask("test", ["jshint", "buster"]);
+  grunt.registerTask("lint", ["jshint", "jsbeautifier"]);
+  grunt.registerTask("test", ["mochaTest:clientRaw", "mochaTest:server"]);
+  grunt.registerTask("compile", ["browserify", "uglify"]);
+
+  grunt.registerTask("coverage", ["instrument", "mochaTest:coverage", "storeCoverage", "makeReport"]);
+  grunt.registerTask("doc", ["yuidoc"]);
+
+  grunt.registerTask("default", ["lint", "test", "compile"]);
 };

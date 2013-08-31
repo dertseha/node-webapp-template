@@ -1,6 +1,6 @@
 {
   "name": "node-webapp-template",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "A template for node/web applications.",
   "private": true,
   "author": {
@@ -20,23 +20,21 @@
     "winston": "0.7.x"
   },
   "devDependencies": {
-    "buster": "~0.6.12",
-    "buster-amd": "~0.3.0",
-    "buster-istanbul": "~0.1.7",
+    "expect.js": "~0.2.0",
     "grunt": "~0.4.1",
-    "grunt-buster": "git://github.com/busterjs/grunt-buster.git",
-    "grunt-contrib-copy": "~0.4.1",
+    "grunt-browserify": "~1.2.4",
     "grunt-contrib-jshint": "~0.4.3",
-    "grunt-contrib-requirejs": "~0.4.0",
-    "grunt-plato": "~0.2.0",
-    "phantomjs": "~1.9.0-3",
-    "grunt-contrib-yuidoc": "~0.4.0"
+    "grunt-contrib-uglify": "~0.2.2",
+    "grunt-contrib-yuidoc": "~0.4.0",
+    "grunt-istanbul": "~0.2.2",
+    "grunt-jsbeautifier": "~0.2.0",
+    "grunt-mocha-test": "~0.6.3"
   },
   "engines": {
-    "node": ">=0.8.x"
+    "node": ">=0.10.x"
   },
   "scripts": {
     "start": "node src/server/server.js",
-    "test": "grunt test"
+    "test": "grunt"
   }
 }
