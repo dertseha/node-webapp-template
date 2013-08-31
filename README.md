@@ -12,11 +12,15 @@ It contains the basic setup for a build chain using grunt.
 ** README.md, package.json, ...
 * Set up Travis-CI
 
-## Quirks and Hacks in the setup
-### BusterJs
-grunt-buster uses a direct dependency on github to use the new (unreleased) 2.0 version which allows multiple tasks.
-Although buster-configuration (the one in the indirect dependencies) has a problem with explicit (relative) configuration files,
-with the new grunt-buster plugin it is possible to specify separate tasks with each setting the config group to run.
+## Grunt tasks
+* lint: running jshint (.jshintrc) and jsbeautifier (.jsbeautifyrc)
+* test: running mocha on server and client tests
+* compile: browserify on all client sources, uglify for minification
+* coverage: runs a silent test using istanbul for coverage.
+* doc: YUIdoc on all sources
+
+The default task runs lint, test and compile in that order.
+
 
 ## License
 
