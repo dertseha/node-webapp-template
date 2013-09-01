@@ -8,10 +8,9 @@
     "email": "christian.haas@sevensuns.at"
   },
   "licenses": [{
-      "type": "BSD-3-Clause",
-      "url": "https://github.com/dertseha/node-webapp-template/blob/master/LICENSE"
-    }
-  ],
+    "type": "BSD-3-Clause",
+    "url": "https://github.com/dertseha/node-webapp-template/blob/master/LICENSE"
+  }],
   "homepage": "https://github.com/dertseha/node-webapp-template",
   "bugs": "https://github.com/dertseha/node-webapp-template/issues",
   "repository": {
@@ -25,6 +24,7 @@
     "winston": "0.7.x"
   },
   "devDependencies": {
+    "coveralls": "~2.2.0",
     "expect.js": "~0.2.0",
     "grunt": "~0.4.1",
     "grunt-browserify": "~1.2.4",
@@ -39,7 +39,6 @@
     "node": ">=0.10.x"
   },
   "scripts": {
-    "start": "node src/server/server.js",
-    "test": "grunt"
+    "start": "node src/server/server.js"
   }
 }
