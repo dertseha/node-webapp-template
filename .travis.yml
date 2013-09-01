@@ -4,5 +4,6 @@ node_js:
 before_script:
   - npm install -g grunt-cli
 script:
-  - grunt ci
+  - grunt
+  - grunt coverage
   - node node_modules/coveralls/bin/coveralls.js < build/reports/coverage/lcov.info

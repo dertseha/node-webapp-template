@@ -137,6 +137,5 @@ module.exports = function(grunt) {
   grunt.registerTask("coverage", ["instrument", "mochaTest:coverage", "storeCoverage", "makeReport"]);
   grunt.registerTask("doc", ["yuidoc"]);
 
-  grunt.registerTask("ci", ["jshint", "test", "compile", "coverage"]);
   grunt.registerTask("default", ["lint", "test", "compile"]);
 };
